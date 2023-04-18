@@ -43,22 +43,21 @@ export interface Rating {
 }
 
 // cart
-export interface CartItem {
-  product: Product;
+
+export interface CartItemType  {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  price: number;
   quantity: number;
-}
-
-export type Action =
-  | { type: "ADD_ITEM"; payload: CartItem }
-  | { type: "REMOVE_ITEM"; payload: Product }
-  | { type: "CHANGE_QUANTITY"; payload: { product: Product; quantity: number } }
-  | { type: "CLEAR_CART" };
-
-export interface State {
-  items: CartItem[];
-}
-
+};
 export interface CartContextType {
-  state: State;
-  dispatch: React.Dispatch<Action>;
+  cartItems: CartItemType[];
+  addToCart: (item: CartItemType) => void;
+  removeFromCart: (id: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
+}
+export interface CartProviderProps {
+  children: React.ReactNode;
 }
