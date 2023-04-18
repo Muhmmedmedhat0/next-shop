@@ -1,4 +1,4 @@
-import React,  { useState } from "react";
+import React,  { useContext, useState } from "react";
 
 import { styled, alpha } from "@mui/material/styles";
 import {AppBar, Box, Toolbar, IconButton, Typography} from "@mui/material";
@@ -11,6 +11,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import { CartContext } from "../../contexts/cart-context";
+import Link from "next/link";
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -56,6 +58,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+  const { cartItems } = useContext(CartContext);
+  // Calculate total quantity of items in the cart
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+// console.log();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -122,17 +128,19 @@ export default function Navbar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show Cart"
-          color="inherit">
-          <Badge badgeContent={0} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
+      <Link href="/cart">
+        <MenuItem>
+          <IconButton
+            size="large"
+            aria-label="show Cart"
+            color="inherit">
+            <Badge badgeContent={totalItems > 0 ? totalItems : null} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+          <p>Cart</p>
+        </MenuItem>
+      </Link>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -149,7 +157,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1}} >
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar sx={{backgroundColor: "#FDF0F5", color:'#BA90C6'}} >
           <IconButton
             size="large"
@@ -185,14 +193,17 @@ export default function Navbar() {
                 <MailIcon />
               </Badge>
             </IconButton>
+           
+            <Link href="/cart">
             <IconButton
               size="large"
               aria-label="show Cart"
               color="inherit">
-              <Badge badgeContent={0} color="error">
+          <Badge badgeContent={totalItems > 0 ? totalItems : null} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
+            </Link>
             <IconButton
               size="large"
               edge="end"
