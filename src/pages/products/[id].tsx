@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { Product } from "../../../Types/app-props.types";
@@ -7,11 +7,32 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { imageLoader } from "../../../helpers/image-loader";
 import NewsLetter from "../../../components/news-letter/news-letter";
 import Footer from "../../../components/footer/footer";
+import { CartContext } from "../../../contexts/cart-context";
 
 import classes from "../../styles/product-id.module.scss";
 
 function ProductPage({ product }: { product: Product }) {
-  // console.log(product);
+  const { cartItems, addToCart } = useContext(CartContext);
+
+  const [quantity, setQuantity] = useState(1);
+
+
+  const handleQuantityChange = (id: number, newQuantity: number) => {
+    if (newQuantity <= 0) {
+      setQuantity(0); // Update state of quantity
+    } else {
+      setQuantity(newQuantity); // Update state of quantity
+    }
+  };
+
+  const handleAddToCart = () => {
+    addToCart({ ...product, quantity });
+  };
+
+  const subtotalPrice = cartItems.reduce(
+    (total, currentItem) => total + currentItem.price * currentItem.quantity,
+    0
+  );
 
   return (
     <>
@@ -31,16 +52,13 @@ function ProductPage({ product }: { product: Product }) {
           <p className={classes.infoPrice}>{product.price} $</p>
           <div className={classes.addToCart}>
             <div className={classes.amountContainer}>
-              <AddIcon className={classes.icon} // onClick={() => props.handleQuantity("dec")}
-								/>
-              <span className={classes.amount}>1</span>
-              <RemoveIcon className={classes.icon}
-                // onClick={() => props.handleQuantity("inc")}
-              />
+              <AddIcon className={classes.icon} onClick={() => handleQuantityChange(product.id, quantity + 1)} />
+              <span className={classes.amount}>{quantity}</span>
+              <RemoveIcon className={classes.icon} onClick={() => handleQuantityChange(product.id, quantity - 1)} />
             </div>
-            <button className={classes.addToCartButton}
-              // onClick={product.handleCart}
-            > ADD TO CART </button>
+            <button className={classes.addToCartButton} onClick={handleAddToCart}>
+              ADD TO CART
+            </button>
           </div>
         </div>
       </div>
@@ -80,9 +98,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // 2- getStaticProps
-export const getStaticProps: GetStaticProps = async (
-  context: GetStaticPropsContext,
-) => {
+export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
   const id = context.params?.id as string;
   try {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
