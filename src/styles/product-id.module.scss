@@ -1,0 +1,89 @@
+.wrapper {
+  padding: 50px;
+  display: flex;
+}
+.imgContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoContainer {
+  flex: 1;
+  padding: 0px 50px;
+}
+.infoTitle {
+  font-weight: 200;
+  font-size: 30px;
+}
+.infoDescription {
+  margin: 20px 0;
+}
+.infoPrice {
+  font-weight: 100;
+  font-size: 40px;
+}
+
+.filterTitle {
+  font-size: 20px;
+  font-weight: 300;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  div {
+    margin-bottom: 10px;
+  }
+}
+.filterColor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.filterSize {
+  margin-left: 10px;
+  padding: 5px;
+}
+.addToCart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  div {
+    margin-bottom: 20px;
+  }
+  button {
+    margin-bottom: 20px;
+  }
+}
+.amountContainer {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+.icon {
+  cursor: pointer;
+}
+.amount {
+  width: 30px;
+  height: 30px;
+  border: 1px solid teal;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+.addToCartButton {
+  padding: 7px 10px;
+  border: 2px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+.addToCartButton:hover {
+  background-color: teal;
+  color: white;
+}

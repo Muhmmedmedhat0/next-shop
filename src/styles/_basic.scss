@@ -1,0 +1,30 @@
+$colors: (
+  white: hsl(0, 0%, 100%),
+  light-gray: hsl(212, 45%, 89%),
+  grayish-blue: hsl(220, 15%, 55%),
+  dark-blue: hsl(218, 44%, 22%),
+);
+
+$font-weights: (
+  regular: 400,
+  bold: 700,
+);
+
+@mixin display-flex($direction, $wrap) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  flex: {
+    direction: $direction;
+    wrap: $wrap;
+  }
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

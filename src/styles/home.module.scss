@@ -1,0 +1,12 @@
+@import "_basic.scss";
+
+.container {
+    // @include display-flex(row, nowrap);
+    // justify-content: center;
+    // align-items: center;
+    // min-height: 100vh;
+		// background-color: map-get($colors, white);
+		h1{
+			text-align: center;
+		}
+}
